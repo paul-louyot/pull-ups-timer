@@ -13,19 +13,23 @@ function handleKeyPress(){
 
   repsDoneNb ++;
   startTimer();
+  document.querySelector('#text').innerText = delay;
+  document.querySelector('#count').innerText = repsDoneNb;
 }
 
 function startTimer(){
   timerPending = true;
   delay = 6;
-  document.querySelector('#text').innerText = delay;
   intervalID = setInterval(runTimer, 1000);
 }
 
 function runTimer(){
   delay --;
   document.querySelector('#text').innerText = delay;
-  if(delay == 0) clearInterval(intervalID);
+  if (delay > 0) return;
+
+  clearInterval(intervalID);
+  timerPending = false;
 }
 
 function debug(){
