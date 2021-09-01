@@ -6,6 +6,9 @@ var intervalID = null;
 document.onkeypress = function (e) {
   if(e.code == 'Space') handleKeyPress();
 };
+document.ontouchstart = function () {
+  handleKeyPress();
+};
 
 function handleKeyPress(){
   if(!started) started = true;
