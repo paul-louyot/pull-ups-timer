@@ -19,7 +19,7 @@ function handleKeyPress(){
 
 function startTimer(){
   timerPending = true;
-  delay = 6;
+  delay = 60;
   intervalID = setInterval(runTimer, 1000);
 }
 
