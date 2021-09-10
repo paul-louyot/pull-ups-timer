@@ -3,6 +3,8 @@ var repsDoneNb = 0;
 var timerPending = false;
 var delay = 0;
 var intervalID = null;
+let wakeLock = null;
+
 document.onkeypress = function (e) {
   if(e.code == 'Space') handleKeyPress();
 };
@@ -24,6 +26,7 @@ function startTimer(){
   timerPending = true;
   delay = 60;
   intervalID = setInterval(runTimer, 1000);
+  requestWakeLock();
 }
 
 function runTimer(){
@@ -33,9 +36,19 @@ function runTimer(){
 
   clearInterval(intervalID);
   timerPending = false;
+  wakeLock.release()
+    .then(() => {
+      wakeLock = null;
+    });
 }
 
-function debug(){
-  console.log(started, repsDoneNb)
-}
+const requestWakeLock = async () => {
+  if ('wakeLock' in navigator) {
+    try {
+      wakeLock = await navigator.wakeLock.request();
+    } catch (err) {
+      console.error(`${err.name}, ${err.message}`);
+    }
+  }
+};
 
